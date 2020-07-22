@@ -1,0 +1,15 @@
+clear all;
+clc;
+X = [];
+%input X number
+
+%initialize parameters
+Acc_threshold = 3;
+Stride_time_up_threshold = 0.9;
+Stride_time_low_threshold = 2;
+[t,a1,a2,a3,g1,g2,g3] = identifystep(X, Acc_threshold, Stride_time_up_threshold, Stride_time_low_threshold);
+for i = 1:1:size(a1,2)
+Acc_Gyro = [t(i);a1(:,i);a2(:,i);a3(:,i);g1(:,i);g2(:,i);g3(:,i)];
+end
+y(1:) = 1;%1 for pathological gait, 0 for healthy gait
+save('BCBS5.mat','Acc_Gyro','y');
