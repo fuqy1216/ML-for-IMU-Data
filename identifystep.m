@@ -8,9 +8,10 @@ g2 = [];
 g3 = [];
 %initialize step start vector
 stepstart = [];
+Euler = qua2eul(X(:,5:8));
 %calculate resultant acc
 for i = 1:1:size(X,1)
-ACC_Result(i) = sumsqr(X(i,5:7));
+ACC_Result(i) = sumsqr(X(i,2:4));
 end
 %find acc that greater than threshold m/s^2
 ACC_high = find(ACC_Result > Acc_threshold);
@@ -33,11 +34,11 @@ for i = 2:1:size(stepstart,2)
         %normalize gait data
         T = 1:(99/t(rownum)):100;
         Nor_T = 1:1:100;
-        g1(:,rownum) = interp1(T,X(stepstart(i-1):stepstart(i),2),Nor_T);
-        g2(:,rownum) = interp1(T,X(stepstart(i-1):stepstart(i),3),Nor_T);
-        g3(:,rownum) = interp1(T,X(stepstart(i-1):stepstart(i),4),Nor_T);
-        a1(:,rownum) = interp1(T,X(stepstart(i-1):stepstart(i),5),Nor_T);
-        a2(:,rownum) = interp1(T,X(stepstart(i-1):stepstart(i),6),Nor_T);
-        a3(:,rownum) = interp1(T,X(stepstart(i-1):stepstart(i),7),Nor_T);
+        a1(:,rownum) = interp1(T,X(stepstart(i-1):stepstart(i),2),Nor_T);
+        a2(:,rownum) = interp1(T,X(stepstart(i-1):stepstart(i),3),Nor_T);
+        a3(:,rownum) = interp1(T,X(stepstart(i-1):stepstart(i),4),Nor_T);
+        g1(:,rownum) = interp1(T,Euler(stepstart(i-1):stepstart(i),1),Nor_T);
+        g2(:,rownum) = interp1(T,Euler(stepstart(i-1):stepstart(i),2),Nor_T);
+        g3(:,rownum) = interp1(T,Euler(stepstart(i-1):stepstart(i),3),Nor_T);
     end
 end
